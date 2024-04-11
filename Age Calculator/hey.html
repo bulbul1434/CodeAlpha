@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Age Calculator</title>
+   
+</head>
+<body>
+    <div class="container">
+        <h1>Age Calculator</h1>
+        <!-- Form to submit the birthday -->
+        <form id="age-form">
+            <label for="birthday">Enter your DOB:</label>
+            <input type="text" id="birthday" name="birthday" placeholder="MM/DD/YYYY" required>
+            <input type="submit" value="Result">
+        </form>
+        <!-- Display the result -->
+        <p id="result"></p>
+    </div>
+    <script>
+        // Add event listener to the form
+        document.getElementById('age-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const birthday = document.getElementById('birthday').value;
+            const age = calculateAge(birthday);
+            document.getElementById('result').textContent = `Your age is: ${age}`;
+        });
+
+        // Function to calculate the age
+        function calculateAge(birthday) {
+            const dob = new Date(birthday);
+            const currentDate = new Date();
+            const yearDiff = currentDate.getFullYear() - dob.getFullYear();
+            const monthDiff = currentDate.getMonth() - dob.getMonth();
+            const dayDiff = currentDate.getDate() - dob.getDate();
+
+            // If the birthday hasn't happened yet this year, subtract one from the year difference
+            if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+                return yearDiff - 1;
+            }
+            return yearDiff;
+        }
+    </script>
+</body>
+</html>
